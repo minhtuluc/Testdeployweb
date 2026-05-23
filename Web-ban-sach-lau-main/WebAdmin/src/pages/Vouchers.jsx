@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { 
-  Ticket, 
-  Plus, 
-  Trash2, 
-  Calendar, 
+import {
+  Ticket,
+  Plus,
+  Trash2,
+  Calendar,
   AlertCircle,
   Tag,
   Percent,
@@ -79,7 +79,7 @@ const Vouchers = () => {
           <h1 style={styles.title}>Quản lý mã giảm giá</h1>
           <p style={styles.subtitle}>Tạo và quản lý các chương trình ưu đãi hệ thống.</p>
         </div>
-        
+
         <button style={styles.addBtn} onClick={() => setShowModal(true)}>
           <Plus size={20} />
           <span>Thêm mã mới</span>
@@ -99,22 +99,22 @@ const Vouchers = () => {
               </div>
               <div style={styles.dashLine}></div>
             </div>
-            
+
             <div style={styles.voucherRight}>
               <div style={styles.cardHeader}>
                 <h3 style={styles.voucherCode}>{v.code}</h3>
-                <button 
+                <button
                   style={styles.deleteIcon}
                   onClick={() => handleDelete(v.id, v.code)}
                 >
                   <Trash2 size={16} />
                 </button>
               </div>
-              
+
               <div style={styles.discountRow}>
                 <span style={styles.discountValue}>{v.discount_percent}% OFF</span>
               </div>
-              
+
               <div style={styles.detailsRow}>
                 <div style={styles.detailItem}>
                   <AlertCircle size={14} />
@@ -125,7 +125,7 @@ const Vouchers = () => {
                   <span>Hết hạn: {new Date(v.expired_at).toLocaleDateString('vi-VN')}</span>
                 </div>
               </div>
-              
+
               <div style={styles.statusBadge}>
                 {new Date(v.expired_at) < new Date() ? 'Hết hạn' : 'Đang áp dụng'}
               </div>
@@ -139,51 +139,51 @@ const Vouchers = () => {
         <div style={styles.modalOverlay} onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}>
           <div style={styles.modal} className="animate-fade-in">
             <div style={styles.modalHeader}>
-              <h2 style={{fontSize: '20px'}}>Tạo mã giảm giá mới</h2>
+              <h2 style={{ fontSize: '20px' }}>Tạo mã giảm giá mới</h2>
               <button style={styles.closeBtn} onClick={() => setShowModal(false)}><X size={24} /></button>
             </div>
-            
+
             <form onSubmit={handleSubmit} style={styles.form}>
               <div style={styles.inputGroup}>
-                <label style={styles.label}>Mã giảm giá (VD: OMNI50)</label>
+                <label style={styles.label}>Mã giảm giá (VD: BOOK50)</label>
                 <div style={styles.inputWrapper}>
                   <Tag size={18} style={styles.icon} />
-                  <input 
-                    type="text" 
-                    placeholder="NHẬP MÃ" 
+                  <input
+                    type="text"
+                    placeholder="NHẬP MÃ"
                     style={styles.input}
                     value={formData.code}
-                    onChange={e => setFormData({...formData, code: e.target.value.toUpperCase()})}
+                    onChange={e => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
                     required
                   />
                 </div>
               </div>
 
               <div style={styles.inputRow}>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <label style={styles.label}>% Giảm</label>
                   <div style={styles.inputWrapper}>
                     <Percent size={18} style={styles.icon} />
-                    <input 
-                      type="number" 
-                      placeholder="VD: 10" 
+                    <input
+                      type="number"
+                      placeholder="VD: 10"
                       style={styles.input}
                       value={formData.discount_percent}
-                      onChange={e => setFormData({...formData, discount_percent: e.target.value})}
+                      onChange={e => setFormData({ ...formData, discount_percent: e.target.value })}
                       required
                     />
                   </div>
                 </div>
-                <div style={{flex: 1}}>
+                <div style={{ flex: 1 }}>
                   <label style={styles.label}>Giảm tối đa (₫)</label>
                   <div style={styles.inputWrapper}>
                     <CircleDollarSign size={18} style={styles.icon} />
-                    <input 
-                      type="number" 
-                      placeholder="Để trống nếu không giới hạn" 
+                    <input
+                      type="number"
+                      placeholder="Để trống nếu không giới hạn"
                       style={styles.input}
                       value={formData.max_discount}
-                      onChange={e => setFormData({...formData, max_discount: e.target.value})}
+                      onChange={e => setFormData({ ...formData, max_discount: e.target.value })}
                     />
                   </div>
                 </div>
@@ -193,12 +193,12 @@ const Vouchers = () => {
                 <label style={styles.label}>Đơn hàng tối thiểu (₫)</label>
                 <div style={styles.inputWrapper}>
                   <CircleDollarSign size={18} style={styles.icon} />
-                  <input 
-                    type="number" 
-                    placeholder="VD: 100000" 
+                  <input
+                    type="number"
+                    placeholder="VD: 100000"
                     style={styles.input}
                     value={formData.min_order}
-                    onChange={e => setFormData({...formData, min_order: e.target.value})}
+                    onChange={e => setFormData({ ...formData, min_order: e.target.value })}
                   />
                 </div>
               </div>
@@ -207,11 +207,11 @@ const Vouchers = () => {
                 <label style={styles.label}>Ngày hết hạn</label>
                 <div style={styles.inputWrapper}>
                   <Calendar size={18} style={styles.icon} />
-                  <input 
-                    type="date" 
+                  <input
+                    type="date"
                     style={styles.input}
                     value={formData.expired_at}
-                    onChange={e => setFormData({...formData, expired_at: e.target.value})}
+                    onChange={e => setFormData({ ...formData, expired_at: e.target.value })}
                     required
                   />
                 </div>
@@ -221,7 +221,7 @@ const Vouchers = () => {
             </form>
           </div>
         </div>
-      , document.body)}
+        , document.body)}
     </div>
   );
 };

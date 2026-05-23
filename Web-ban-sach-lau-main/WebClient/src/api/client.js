@@ -12,7 +12,7 @@ const client = axios.create({
 // Interceptor gắn token
 client.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('omnimart_token');
+    const token = localStorage.getItem('bookhaven_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -26,8 +26,8 @@ client.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('omnimart_token');
-      localStorage.removeItem('omnimart_user');
+      localStorage.removeItem('bookhaven_token');
+      localStorage.removeItem('bookhaven_user');
       window.location.href = '/login';
     }
     return Promise.reject(error);

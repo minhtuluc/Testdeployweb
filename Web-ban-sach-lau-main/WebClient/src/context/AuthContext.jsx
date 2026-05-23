@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('omnimart_user');
-    const token = localStorage.getItem('omnimart_token');
+    const storedUser = localStorage.getItem('bookhaven_user');
+    const token = localStorage.getItem('bookhaven_token');
 
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
@@ -21,15 +21,15 @@ export const AuthProvider = ({ children }) => {
     const { data } = await client.post('/auth/login', { email, password });
     
     // Lưu thông tin vào localStorage cho mọi role
-    localStorage.setItem('omnimart_token', data.token);
-    localStorage.setItem('omnimart_user', JSON.stringify(data.user));
+    localStorage.setItem('bookhaven_token', data.token);
+    localStorage.setItem('bookhaven_user', JSON.stringify(data.user));
     setUser(data.user);
     return data.user;
   };
 
   const logout = () => {
-    localStorage.removeItem('omnimart_token');
-    localStorage.removeItem('omnimart_user');
+    localStorage.removeItem('bookhaven_token');
+    localStorage.removeItem('bookhaven_user');
     setUser(null);
     window.location.href = '/login';
   };

@@ -92,7 +92,7 @@ const Profile = () => {
       });
       
       const updatedUser = { ...user, name: profileData.name, phone: profileData.phone };
-      localStorage.setItem('omnimart_user', JSON.stringify(updatedUser));
+      localStorage.setItem('bookhaven_user', JSON.stringify(updatedUser));
       setUser(updatedUser);
 
       success('Cập nhật hồ sơ thành công!');
@@ -143,7 +143,7 @@ const Profile = () => {
       setProfileData({ ...profileData, avatar: data.avatarUrl });
       
       const updatedUser = { ...user, avatar: data.avatarUrl };
-      localStorage.setItem('omnimart_user', JSON.stringify(updatedUser));
+      localStorage.setItem('bookhaven_user', JSON.stringify(updatedUser));
       setUser(updatedUser);
 
       success('Cập nhật ảnh đại diện thành công!');
@@ -161,7 +161,7 @@ const Profile = () => {
       
       // Cập nhật context và localStorage
       const updatedUser = { ...user, ...data.user };
-      localStorage.setItem('omnimart_user', JSON.stringify(updatedUser));
+      localStorage.setItem('bookhaven_user', JSON.stringify(updatedUser));
       setUser(updatedUser);
       
       success('Chúc mừng! Bạn đã trở thành thành viên VIP.');

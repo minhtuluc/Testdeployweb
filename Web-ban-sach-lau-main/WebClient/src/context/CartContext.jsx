@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
   // Load cart when user changes
   useEffect(() => {
     const userId = user && user.id ? user.id : 'guest';
-    const key = `omnimart_cart_${userId}`;
+    const key = `bookhaven_cart_${userId}`;
     const saved = localStorage.getItem(key);
     setCartItems(saved ? JSON.parse(saved) : []);
     setLoadedUser(userId);
@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const userId = user && user.id ? user.id : 'guest';
     if (loadedUser === userId) {
-      const key = `omnimart_cart_${userId}`;
+      const key = `bookhaven_cart_${userId}`;
       localStorage.setItem(key, JSON.stringify(cartItems));
     }
   }, [cartItems, user, loadedUser]);
