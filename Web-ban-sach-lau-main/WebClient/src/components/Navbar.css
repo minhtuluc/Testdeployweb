@@ -1,0 +1,211 @@
+/* Navbar.css */
+.navbar-wrapper {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  padding: 12px 0;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.navbar-logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo-text {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+  letter-spacing: -0.5px;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Scrollable Links Section */
+.navbar-links-section {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.navbar-link {
+  font-weight: 500;
+  color: var(--text-main);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.navbar-link:hover {
+  color: var(--primary);
+}
+
+.navbar-actions-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-muted);
+}
+
+.navbar-search-input {
+  padding: 10px 15px 10px 40px;
+  border-radius: 25px;
+  border: 1px solid var(--border);
+  outline: none;
+  width: 250px;
+  font-size: 14px;
+  background-color: var(--bg);
+  transition: all 0.3s;
+}
+
+.navbar-search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 176, 75, 0.2);
+}
+
+.navbar-icon-btn {
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.navbar-login-btn {
+  background-color: var(--bg-dark);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.navbar-login-btn:hover {
+  background-color: #000;
+}
+
+.navbar-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar-logout-btn {
+  background-color: transparent;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.navbar-cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MOBILE RESPONSIVE (Option B: Horizontal Scroll) */
+@media (max-width: 768px) {
+  .navbar-wrapper {
+    padding: 10px 0;
+  }
+  
+  .navbar-container {
+    padding: 0 15px;
+    gap: 12px;
+    /* Allow components to layout properly on small screens */
+  }
+
+  /* Top Row: Logo and Icons */
+  .navbar-logo-section {
+    flex: 1;
+  }
+
+  .navbar-actions-section {
+    gap: 15px;
+  }
+
+  /* Hide Search on Top Row, will move to its own row if needed, but let's make it flexible */
+  .navbar-search-box {
+    order: 3;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  .navbar-search-input {
+    width: 100%;
+  }
+
+  .navbar-icon-btn {
+    order: 1;
+  }
+
+  .navbar-user-menu, .navbar-login-btn {
+    order: 2;
+  }
+
+  .navbar-login-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* Navigation Links: Horizontal Scrollable Row */
+  .navbar-links-section {
+    order: 4;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 5px;
+    gap: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .navbar-links-section::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .navbar-link {
+    font-size: 14px;
+    padding: 5px 0;
+  }
+}
