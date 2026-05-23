@@ -153,35 +153,25 @@
   .navbar-container {
     padding: 0 15px;
     gap: 12px;
-    /* Allow components to layout properly on small screens */
   }
 
-  /* Top Row: Logo and Icons */
+  /* Flatten actions section so children participate in container's flex-wrap */
+  .navbar-actions-section {
+    display: contents;
+  }
+
+  /* Top Row: Logo, Cart, User */
   .navbar-logo-section {
     flex: 1;
-  }
-
-  .navbar-actions-section {
-    gap: 15px;
-  }
-
-  /* Hide Search on Top Row, will move to its own row if needed, but let's make it flexible */
-  .navbar-search-box {
-    order: 3;
-    width: 100%;
-    margin-top: 5px;
-  }
-  
-  .navbar-search-input {
-    width: 100%;
-  }
-
-  .navbar-icon-btn {
     order: 1;
   }
 
-  .navbar-user-menu, .navbar-login-btn {
+  .navbar-icon-btn {
     order: 2;
+  }
+
+  .navbar-user-menu, .navbar-login-btn {
+    order: 3;
   }
 
   .navbar-login-btn {
@@ -189,9 +179,20 @@
     font-size: 12px;
   }
 
-  /* Navigation Links: Horizontal Scrollable Row */
-  .navbar-links-section {
+  /* Second Row: Search Bar */
+  .navbar-search-box {
     order: 4;
+    width: 100%;
+    margin-top: 4px;
+  }
+  
+  .navbar-search-input {
+    width: 100%;
+  }
+
+  /* Third Row: Navigation Links */
+  .navbar-links-section {
+    order: 5;
     width: 100%;
     overflow-x: auto;
     padding-bottom: 5px;
