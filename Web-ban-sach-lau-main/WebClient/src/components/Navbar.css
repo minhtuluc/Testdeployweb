@@ -147,7 +147,11 @@
 /* MOBILE RESPONSIVE (Option B: Horizontal Scroll) */
 @media (max-width: 768px) {
   .navbar-wrapper {
-    padding: 10px 0;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: 10px;
+    /* Force GPU acceleration to prevent Safari sticky rendering bugs */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
   
   .navbar-container {
