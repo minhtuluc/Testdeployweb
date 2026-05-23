@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.expo/
+dist/
+build/
+.next/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+.expo/
+dist/
+build/
+.next/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project specific
+Backend/find_admin.js
+WebAdmin/node_modules/
+WebClient/node_modules/
+Backend/node_modules/
+
+ #   L o c a l   d o c u m e n t a t i o n 
+ a d m i n _ l o g i c _ a u d i t . m d 
+ s t e p _ b y _ s t e p _ w e b _ r e d e s i g n . m d  
+ 
