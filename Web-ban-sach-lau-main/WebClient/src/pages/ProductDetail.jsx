@@ -4,6 +4,7 @@ import { ShoppingBag, Star, Minus, Plus, ChevronLeft, Crown, Heart } from 'lucid
 import client from '../api/client';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import './ProductDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -134,14 +135,14 @@ const ProductDetail = () => {
   };
 
   if (loading) {
-    return <div style={styles.centerContainer}>Đang tải...</div>;
+    return <div className="pd-center-container">Đang tải...</div>;
   }
 
   if (error || !product) {
     return (
-      <div style={styles.centerContainer}>
-        <p style={styles.errorText}>{error || 'Sản phẩm không tồn tại'}</p>
-        <button onClick={() => navigate('/')} style={styles.backBtn}>
+      <div className="pd-center-container">
+        <p className="pd-error-text">{error || 'Sản phẩm không tồn tại'}</p>
+        <button onClick={() => navigate('/')} className="pd-back-btn-error">
           <ChevronLeft size={20} />
           Quay lại trang chủ
         </button>
@@ -174,39 +175,34 @@ const ProductDetail = () => {
       if (colorVariant) {
         displayImage = colorVariant.image;
       }
-    } else if (selectedVariant?.image) {
-      displayImage = selectedVariant.image;
-    }
-  }
-
-  return (
-    <div style={styles.container}>
-      <button onClick={() => navigate(-1)} style={styles.backLink}>
+    } else if (se  return (
+    <div className="pd-container">
+      <button onClick={() => navigate(-1)} className="pd-back-link">
         <ChevronLeft size={20} /> Quay lại
       </button>
 
-      <div style={styles.productWrapper}>
+      <div className="pd-product-wrapper">
         {/* Left: Image Gallery */}
-        <div style={styles.imageSection}>
-          <div style={styles.mainImageContainer}>
+        <div className="pd-image-section">
+          <div className="pd-main-image-container">
             <img
               src={displayImage}
               alt={product.name}
-              style={styles.mainImage}
+              className="pd-main-image"
             />
           </div>
           {galleryImages.length > 1 && (
-            <div style={styles.thumbnailGallery}>
+            <div className="pd-thumbnail-gallery">
               {galleryImages.map((img, idx) => (
                 <button
                   key={idx}
+                  className="pd-thumbnail-btn"
                   style={{
-                    ...styles.thumbnailBtn,
                     borderColor: displayImage === img ? 'var(--primary)' : 'transparent'
                   }}
                   onClick={() => setActiveImage(img)}
                 >
-                  <img src={img} alt={`Thumbnail ${idx}`} style={styles.thumbnailImg} />
+                  <img src={img} alt={`Thumbnail ${idx}`} className="pd-thumbnail-img" />
                 </button>
               ))}
             </div>
@@ -214,12 +210,12 @@ const ProductDetail = () => {
         </div>
 
         {/* Right: Product Info */}
-        <div style={styles.infoSection}>
+        <div className="pd-info-section">
 
-          <h1 style={styles.title}>{product.name}</h1>
+          <h1 className="pd-title">{product.name}</h1>
 
-          <div style={styles.ratingRow}>
-            <div style={styles.stars}>
+          <div className="pd-rating-row">
+            <div className="pd-stars">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
@@ -229,38 +225,32 @@ const ProductDetail = () => {
                 />
               ))}
             </div>
-            <span style={styles.ratingText}>
+            <span className="pd-rating-text">
               {product.rating?.toFixed(1)} ({product.rating_count} đánh giá)
             </span>
           </div>
 
-          <div style={styles.priceContainer}>
-            <p style={{
-              ...styles.price,
+          <div className="pd-price-container">
+            <p className="pd-price" style={{
               textDecoration: user?.membership_type === 'vip' && product.vip_price ? 'line-through' : 'none',
-              fontSize: user?.membership_type === 'vip' && product.vip_price ? '18px' : '32px', // Tăng cỡ chữ giá thường cho nổi bật
-              color: user?.membership_type === 'vip' && product.vip_price ? 'var(--text-muted)' : 'var(--primary)',
-              marginBottom: 0 // Xóa margin bottom để căn chỉnh trục dọc hoàn hảo với badge
+              fontSize: user?.membership_type === 'vip' && product.vip_price ? '18px' : '32px',
+              color: user?.membership_type === 'vip' && product.vip_price ? 'var(--text-muted)' : 'var(--primary)'
             }}>
               {(selectedVariant?.price || product.price)?.toLocaleString()}₫
             </p>
             {product.vip_price && (
-              <div style={{
-                ...styles.vipPriceBadge,
+              <div className="pd-vip-price-badge" style={{
                 backgroundColor: user?.membership_type === 'vip' ? '#F2FDF5' : '#f8fafc',
                 border: user?.membership_type === 'vip' ? '1.5px solid var(--primary, #00B04B)' : '1px dashed var(--border)',
                 boxShadow: user?.membership_type === 'vip' ? '0 4px 12px rgba(0, 176, 75, 0.12)' : 'none'
               }}>
                 <Crown size={user?.membership_type === 'vip' ? 18 : 14} color="var(--primary, #00B04B)" fill="var(--primary, #00B04B)" />
-                <span style={{
-                  ...styles.vipPriceText,
-                  fontSize: user?.membership_type === 'vip' ? '32px' : '16px', // Tăng cỡ chữ giá VIP khi là VIP thực thụ
-                  fontWeight: '800'
+                <span className="pd-vip-price-text" style={{
+                  fontSize: user?.membership_type === 'vip' ? '32px' : '16px'
                 }}>
                   {product.vip_price.toLocaleString()}₫
                 </span>
-                <span style={{
-                  ...styles.vipLabel,
+                <span className="pd-vip-label" style={{
                   backgroundColor: user?.membership_type === 'vip' ? 'var(--primary, #00B04B)' : 'var(--text-muted)'
                 }}>
                   {user?.membership_type === 'vip' ? 'Giá VIP của bạn' : 'Giá VIP'}
@@ -269,54 +259,54 @@ const ProductDetail = () => {
             )}
           </div>
 
-          <p style={styles.description}>{product.description}</p>
+          <p className="pd-description">{product.description}</p>
 
           {/* Thông tin chi tiết sách */}
           {(product.author || product.publisher || product.isbn || product.pages) && (
-            <div style={styles.bookInfoBox}>
-              <h3 style={styles.bookInfoTitle}>Thông tin sách</h3>
-              <table style={styles.bookInfoTable}>
+            <div className="pd-book-info-box">
+              <h3 className="pd-book-info-title">Thông tin sách</h3>
+              <table className="pd-book-info-table">
                 <tbody>
                   {product.author && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Tác giả</td>
-                      <td style={{ ...styles.bookInfoValue, textTransform: 'uppercase' }}>{product.author}</td>
+                      <td className="pd-book-info-label">Tác giả</td>
+                      <td className="pd-book-info-value" style={{ textTransform: 'uppercase' }}>{product.author}</td>
                     </tr>
                   )}
                   {product.publisher && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Nhà xuất bản</td>
-                      <td style={styles.bookInfoValue}>{product.publisher}</td>
+                      <td className="pd-book-info-label">Nhà xuất bản</td>
+                      <td className="pd-book-info-value">{product.publisher}</td>
                     </tr>
                   )}
                   {product.published_year && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Năm xuất bản</td>
-                      <td style={styles.bookInfoValue}>{product.published_year}</td>
+                      <td className="pd-book-info-label">Năm xuất bản</td>
+                      <td className="pd-book-info-value">{product.published_year}</td>
                     </tr>
                   )}
                   {product.pages && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Số trang</td>
-                      <td style={styles.bookInfoValue}>{product.pages} trang</td>
+                      <td className="pd-book-info-label">Số trang</td>
+                      <td className="pd-book-info-value">{product.pages} trang</td>
                     </tr>
                   )}
                   {product.language && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Ngôn ngữ</td>
-                      <td style={styles.bookInfoValue}>{product.language}</td>
+                      <td className="pd-book-info-label">Ngôn ngữ</td>
+                      <td className="pd-book-info-value">{product.language}</td>
                     </tr>
                   )}
                   {product.isbn && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Mã ISBN</td>
-                      <td style={styles.bookInfoValue}>{product.isbn}</td>
+                      <td className="pd-book-info-label">Mã ISBN</td>
+                      <td className="pd-book-info-value">{product.isbn}</td>
                     </tr>
                   )}
                   {product.cover_type && (
                     <tr>
-                      <td style={styles.bookInfoLabel}>Loại bìa</td>
-                      <td style={styles.bookInfoValue}>{product.cover_type}</td>
+                      <td className="pd-book-info-label">Loại bìa</td>
+                      <td className="pd-book-info-value">{product.cover_type}</td>
                     </tr>
                   )}
                 </tbody>
@@ -324,21 +314,18 @@ const ProductDetail = () => {
             </div>
           )}
 
-          <div style={styles.divider}></div>
+          <div className="pd-divider"></div>
 
           {/* Variants Selection */}
           {/* Chọn biến thể: Loại bìa */}
           {sizes.length > 0 && (
-            <div style={styles.variantSection}>
-              <h3 style={styles.variantTitle}>Loại bìa</h3>
-              <div style={styles.variantOptions}>
+            <div className="pd-variant-section">
+              <h3 className="pd-variant-title">Loại bìa</h3>
+              <div className="pd-variant-options">
                 {sizes.map(size => (
                   <button
                     key={size}
-                    style={{
-                      ...styles.variantBtn,
-                      ...(selectedSize === size ? styles.variantBtnActive : {})
-                    }}
+                    className={`pd-variant-btn ${selectedSize === size ? 'pd-variant-btn-active' : ''}`}
                     onClick={() => setSelectedSize(size)}
                   >
                     {size}
@@ -350,16 +337,13 @@ const ProductDetail = () => {
 
           {/* Chọn biến thể: Phiên bản */}
           {colors.length > 0 && (
-            <div style={styles.variantSection}>
-              <h3 style={styles.variantTitle}>Phiên bản</h3>
-              <div style={styles.variantOptions}>
+            <div className="pd-variant-section">
+              <h3 className="pd-variant-title">Phiên bản</h3>
+              <div className="pd-variant-options">
                 {colors.map(color => (
                   <button
                     key={color}
-                    style={{
-                      ...styles.variantBtn,
-                      ...(selectedColor === color ? styles.variantBtnActive : {})
-                    }}
+                    className={`pd-variant-btn ${selectedColor === color ? 'pd-variant-btn-active' : ''}`}
                     onClick={() => setSelectedColor(color)}
                   >
                     {color}
@@ -370,30 +354,30 @@ const ProductDetail = () => {
           )}
 
           {/* Quantity & Add to Cart */}
-          <div style={styles.actionSection}>
-            <div style={styles.quantityControl}>
+          <div className="pd-action-section">
+            <div className="pd-quantity-control">
               <button
-                style={styles.qtyBtn}
+                className="pd-qty-btn"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
               >
                 <Minus size={18} />
               </button>
-              <span style={styles.qtyText}>{quantity}</span>
+              <span className="pd-qty-text">{quantity}</span>
               <button
-                style={styles.qtyBtn}
+                className="pd-qty-btn"
                 onClick={() => setQuantity(quantity + 1)}
               >
                 <Plus size={18} />
               </button>
             </div>
 
-            <button style={styles.addToCartBtn} onClick={handleAddToCart}>
+            <button className="pd-add-cart-btn" onClick={handleAddToCart}>
               <ShoppingBag size={20} />
               <span>Thêm vào giỏ hàng</span>
             </button>
             <button
+              className="pd-fav-btn"
               style={{
-                ...styles.favBtn,
                 color: isFavorite ? '#ef4444' : '#94a3b8',
                 borderColor: isFavorite ? '#ef4444' : 'var(--border, #e2e8f0)'
               }}
@@ -408,27 +392,27 @@ const ProductDetail = () => {
       </div>
 
       {/* Reviews Section */}
-      <div style={styles.reviewsSection}>
-        <h2 style={styles.reviewsTitle}>Đánh giá từ khách hàng ({reviews.length})</h2>
+      <div className="pd-reviews-section">
+        <h2 className="pd-reviews-title">Đánh giá từ khách hàng ({reviews.length})</h2>
 
         {reviews.length === 0 ? (
-          <p style={styles.noReviews}>Chưa có đánh giá nào cho sản phẩm này.</p>
+          <p className="pd-no-reviews">Chưa có đánh giá nào cho sản phẩm này.</p>
         ) : (
-          <div style={styles.reviewsList}>
+          <div className="pd-reviews-list">
             {reviews.map((review) => (
-              <div key={review.id} style={styles.reviewCard}>
-                <div style={styles.reviewHeader}>
-                  <div style={styles.reviewerInfo}>
-                    <div style={styles.reviewerAvatar}>
+              <div key={review.id} className="pd-review-card">
+                <div className="pd-review-header">
+                  <div className="pd-reviewer-info">
+                    <div className="pd-reviewer-avatar">
                       {review.users?.avatar ? (
-                        <img src={review.users.avatar} alt={review.users.name} style={styles.avatarImg} />
+                        <img src={review.users.avatar} alt={review.users.name} className="pd-avatar-img" />
                       ) : (
                         review.users?.name?.charAt(0) || 'U'
                       )}
                     </div>
                     <div>
-                      <h4 style={styles.reviewerName}>{review.users?.name}</h4>
-                      <div style={styles.reviewStars}>
+                      <h4 className="pd-reviewer-name">{review.users?.name}</h4>
+                      <div className="pd-review-stars">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
@@ -441,7 +425,7 @@ const ProductDetail = () => {
                     </div>
                   </div>
                 </div>
-                <p style={styles.reviewComment}>{review.comment}</p>
+                <p className="pd-review-comment">{review.comment}</p>
               </div>
             ))}
           </div>
@@ -449,385 +433,6 @@ const ProductDetail = () => {
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '20px',
-  },
-  centerContainer: {
-    minHeight: '60vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  errorText: {
-    color: 'var(--danger)',
-    fontSize: '18px',
-    marginBottom: '20px',
-  },
-  backBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '10px 20px',
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '20px',
-    cursor: 'pointer',
-    fontWeight: '600',
-  },
-  backLink: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '5px',
-    color: 'var(--text-muted)',
-    border: 'none',
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    fontSize: '15px',
-    marginBottom: '20px',
-    padding: 0,
-  },
-  productWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '40px',
-    backgroundColor: '#fff',
-    padding: '40px',
-    borderRadius: '24px',
-    boxShadow: 'var(--shadow)',
-  },
-  imageSection: {
-    flex: '1 1 40%',
-    minWidth: '300px',
-  },
-  mainImageContainer: {
-    width: '100%',
-    aspectRatio: '3 / 4',
-    borderRadius: '20px',
-    overflow: 'hidden',
-    backgroundColor: '#f8fafc',
-    boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '20px',
-  },
-  mainImage: {
-    maxWidth: '100%',
-    maxHeight: '100%',
-    objectFit: 'contain',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-    borderRadius: '8px',
-  },
-  thumbnailGallery: {
-    display: 'flex',
-    gap: '10px',
-    marginTop: '15px',
-    overflowX: 'auto',
-    paddingBottom: '5px',
-  },
-  thumbnailBtn: {
-    width: '80px',
-    height: '80px',
-    borderRadius: '12px',
-    border: '2px solid transparent',
-    padding: '2px',
-    backgroundColor: 'transparent',
-    cursor: 'pointer',
-    flexShrink: 0,
-    transition: 'border-color 0.2s',
-  },
-  thumbnailImg: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: '8px',
-  },
-  infoSection: {
-    flex: '1 1 50%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  shopInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    color: 'var(--text-muted)',
-    fontWeight: '600',
-    marginBottom: '12px',
-    fontSize: '14px',
-  },
-  title: {
-    fontSize: '32px',
-    fontWeight: '700',
-    color: 'var(--text-main)',
-    marginBottom: '10px',
-    lineHeight: '1.2',
-    textTransform: 'uppercase',
-  },
-  ratingRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    marginBottom: '20px',
-  },
-  stars: {
-    display: 'flex',
-    gap: '2px',
-  },
-  ratingText: {
-    color: 'var(--text-muted)',
-    fontSize: '14px',
-    fontWeight: '500',
-  },
-  price: {
-    fontSize: '36px',
-    fontWeight: '800',
-    color: 'var(--primary)',
-    marginBottom: '24px',
-  },
-  description: {
-    fontSize: '16px',
-    color: 'var(--text-muted)',
-    lineHeight: '1.6',
-    marginBottom: '20px',
-  },
-  bookInfoBox: {
-    backgroundColor: '#f8fafc',
-    border: '1px solid var(--border)',
-    borderRadius: '16px',
-    padding: '20px 24px',
-    marginBottom: '24px',
-  },
-  bookInfoTitle: {
-    fontSize: '15px',
-    fontWeight: '700',
-    color: 'var(--text-main)',
-    marginBottom: '14px',
-    marginTop: 0,
-  },
-  bookInfoTable: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  bookInfoLabel: {
-    fontSize: '14px',
-    color: 'var(--text-muted)',
-    fontWeight: '600',
-    padding: '5px 0',
-    width: '40%',
-    verticalAlign: 'top',
-  },
-  bookInfoValue: {
-    fontSize: '14px',
-    color: 'var(--text-main)',
-    padding: '5px 0',
-    fontWeight: '500',
-  },
-  divider: {
-    height: '1px',
-    backgroundColor: 'var(--border)',
-    margin: '0 0 30px 0',
-  },
-  variantSection: {
-    marginBottom: '24px',
-  },
-  variantTitle: {
-    fontSize: '16px',
-    fontWeight: '600',
-    marginBottom: '12px',
-  },
-  variantOptions: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '10px',
-  },
-  variantBtn: {
-    padding: '10px 20px',
-    backgroundColor: '#fff',
-    border: '2px solid var(--border)',
-    borderRadius: '12px',
-    fontSize: '14px',
-    fontWeight: '600',
-    color: 'var(--text-main)',
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-  },
-  variantBtnActive: {
-    borderColor: 'var(--primary)',
-    color: 'var(--primary)',
-    backgroundColor: 'rgba(227, 102, 49, 0.05)',
-  },
-  actionSection: {
-    display: 'flex',
-    gap: '20px',
-    marginTop: 'auto',
-    paddingTop: '30px',
-  },
-  quantityControl: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-    backgroundColor: '#f1f5f9',
-    borderRadius: '30px',
-    padding: '5px 15px',
-    border: '1px solid var(--border)',
-  },
-  qtyBtn: {
-    backgroundColor: 'transparent',
-    border: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    color: 'var(--text-main)',
-    padding: '5px',
-  },
-  qtyText: {
-    fontWeight: '700',
-    fontSize: '18px',
-    minWidth: '24px',
-    textAlign: 'center',
-  },
-  addToCartBtn: {
-    flex: 1,
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    border: 'none',
-    padding: '16px',
-    borderRadius: '30px',
-    fontSize: '18px',
-    fontWeight: '700',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: '12px',
-    boxShadow: 'var(--shadow-primary)',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-  },
-  favBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '0 20px',
-    height: '56px', // match with addToCartBtn
-    backgroundColor: '#fff',
-    border: '2px solid',
-    borderRadius: '30px',
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-  },
-  reviewsSection: {
-    marginTop: '60px',
-    padding: '40px',
-    backgroundColor: '#fff',
-    borderRadius: '24px',
-    boxShadow: 'var(--shadow)',
-  },
-  reviewsTitle: {
-    fontSize: '22px',
-    fontWeight: '700',
-    marginBottom: '30px',
-    borderLeft: '5px solid var(--primary)',
-    paddingLeft: '15px',
-  },
-  noReviews: {
-    color: 'var(--text-muted)',
-    textAlign: 'center',
-    padding: '40px 0',
-  },
-  reviewsList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-  },
-  reviewCard: {
-    padding: '24px',
-    backgroundColor: '#f8fafc',
-    borderRadius: '16px',
-    border: '1px solid var(--border)',
-  },
-  reviewHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '15px',
-  },
-  reviewerInfo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-  reviewerAvatar: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: '700',
-    overflow: 'hidden',
-  },
-  avatarImg: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
-  reviewerName: {
-    fontSize: '15px',
-    fontWeight: '700',
-    marginBottom: '2px',
-  },
-  reviewStars: {
-    display: 'flex',
-    gap: '2px',
-  },
-  reviewComment: {
-    fontSize: '15px',
-    color: 'var(--text-main)',
-    lineHeight: '1.5',
-  },
-  priceContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '16px',
-    marginBottom: '24px',
-    padding: '12px 20px',
-    backgroundColor: 'rgba(0, 176, 75, 0.02)', // 2% xanh signature
-    borderRadius: '16px',
-    border: '1px solid rgba(0, 176, 75, 0.08)',
-  },
-  vipPriceBadge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '8px 16px',
-    borderRadius: '30px', // Hình dạng viên thuốc (pill shape) cực đẹp
-    transition: 'all 0.3s ease',
-  },
-  vipPriceText: {
-    fontFamily: 'Outfit, sans-serif',
-    color: 'var(--primary, #00B04B)',
-  },
-  vipLabel: {
-    fontSize: '11px',
-    fontWeight: '800',
-    color: '#fff',
-    padding: '3px 8px',
-    borderRadius: '8px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-  }
 };
 
 export default ProductDetail;

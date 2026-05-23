@@ -19,6 +19,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import client from '../api/client';
+import './Profile.css';
 
 const Profile = () => {
   const { user, logout, setUser } = useAuth();
@@ -165,25 +166,18 @@ const Profile = () => {
       setUser(updatedUser);
       
       success('Chúc mừng! Bạn đã trở thành thành viên VIP.');
-    } catch (err) {
-      showError('Nâng cấp thất bại. Vui lòng thử lại sau.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const renderTabContent = () => {
+    } catc  const renderTabContent = () => {
     switch (activeTab) {
       case 'security':
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <h2 style={styles.tabTitle}>Bảo mật & Đổi mật khẩu</h2>
-            <form onSubmit={handleChangePassword} style={styles.form}>
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Mật khẩu hiện tại <span style={{color: 'red'}}>*</span></label>
+          <div className="animate-fade-in">
+            <h2 className="prof-tab-title">Bảo mật & Đổi mật khẩu</h2>
+            <form onSubmit={handleChangePassword} className="prof-form">
+              <div className="prof-input-group">
+                <label className="prof-label">Mật khẩu hiện tại <span style={{color: 'red'}}>*</span></label>
                 <input 
                   type="password" 
-                  style={styles.input}
+                  className="prof-input"
                   value={passwords.currentPassword}
                   onChange={(e) => setPasswords({...passwords, currentPassword: e.target.value})}
                   placeholder="Nhập mật khẩu hiện tại"
@@ -191,11 +185,11 @@ const Profile = () => {
                   required
                 />
               </div>
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Mật khẩu mới <span style={{color: 'red'}}>*</span></label>
+              <div className="prof-input-group">
+                <label className="prof-label">Mật khẩu mới <span style={{color: 'red'}}>*</span></label>
                 <input 
                   type="password" 
-                  style={styles.input}
+                  className="prof-input"
                   value={passwords.newPassword}
                   onChange={(e) => setPasswords({...passwords, newPassword: e.target.value})}
                   placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)"
@@ -204,11 +198,11 @@ const Profile = () => {
                   minLength={6}
                 />
               </div>
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Xác nhận mật khẩu mới <span style={{color: 'red'}}>*</span></label>
+              <div className="prof-input-group">
+                <label className="prof-label">Xác nhận mật khẩu mới <span style={{color: 'red'}}>*</span></label>
                 <input 
                   type="password" 
-                  style={styles.input}
+                  className="prof-input"
                   value={passwords.confirmPassword}
                   onChange={(e) => setPasswords({...passwords, confirmPassword: e.target.value})}
                   placeholder="Nhập lại mật khẩu mới"
@@ -218,7 +212,7 @@ const Profile = () => {
                 />
               </div>
               <div style={{marginTop: '30px'}}>
-                 <button type="submit" style={styles.submitBtn} disabled={loadingPassword}>
+                 <button type="submit" className="prof-submit-btn" disabled={loadingPassword}>
                     {loadingPassword ? <Loader2 className="spinner" size={18} /> : <Lock size={18} />}
                     {loadingPassword ? 'Đang lưu...' : 'Lưu mật khẩu'}
                  </button>
@@ -228,30 +222,30 @@ const Profile = () => {
         );
       case 'profile':
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <h2 style={styles.tabTitle}>Hồ sơ cá nhân</h2>
-            <form onSubmit={handleUpdateProfile} style={styles.form}>
-              <div style={styles.avatarSection}>
-                <div style={styles.avatarWrapper}>
+          <div className="animate-fade-in">
+            <h2 className="prof-tab-title">Hồ sơ cá nhân</h2>
+            <form onSubmit={handleUpdateProfile} className="prof-form">
+              <div className="prof-avatar-section">
+                <div className="prof-avatar-wrapper">
                   {profileData.avatar ? (
-                    <img src={profileData.avatar} alt="Avatar" style={styles.avatarImg} />
+                    <img src={profileData.avatar} alt="Avatar" className="prof-avatar-img" />
                   ) : (
-                    <div style={styles.avatarPlaceholder}>{profileData.name?.charAt(0)}</div>
+                    <div className="prof-avatar-placeholder">{profileData.name?.charAt(0)}</div>
                   )}
-                  <label style={styles.uploadBtn}>
+                  <label className="prof-upload-btn">
                     <Camera size={16} />
                     <input type="file" hidden onChange={handleAvatarUpload} accept="image/*" />
                   </label>
                 </div>
-                <div style={styles.avatarInfo}>
-                  <p style={styles.avatarHint}>Chạm vào biểu tượng máy ảnh để thay đổi ảnh đại diện</p>
+                <div className="prof-avatar-info">
+                  <p className="prof-avatar-hint">Chạm vào biểu tượng máy ảnh để thay đổi ảnh đại diện</p>
                 </div>
               </div>
 
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Họ và tên</label>
+              <div className="prof-input-group">
+                <label className="prof-label">Họ và tên</label>
                 <input 
-                  style={styles.input} 
+                  className="prof-input" 
                   type="text" 
                   value={profileData.name}
                   onChange={(e) => setProfileData({...profileData, name: e.target.value})}
@@ -259,27 +253,28 @@ const Profile = () => {
                 />
               </div>
 
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Email (Không thể thay đổi)</label>
+              <div className="prof-input-group">
+                <label className="prof-label">Email (Không thể thay đổi)</label>
                 <input 
-                  style={{...styles.input, backgroundColor: '#f1f5f9'}} 
+                  className="prof-input"
+                  style={{backgroundColor: '#f1f5f9'}} 
                   type="email" 
                   value={profileData.email}
                   disabled
                 />
               </div>
 
-              <div style={styles.inputGroup}>
-                <label style={styles.label}>Số điện thoại</label>
+              <div className="prof-input-group">
+                <label className="prof-label">Số điện thoại</label>
                 <input 
-                  style={styles.input} 
+                  className="prof-input" 
                   type="tel" 
                   value={profileData.phone}
                   onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
                 />
               </div>
 
-              <button style={styles.submitBtn} disabled={loading}>
+              <button className="prof-submit-btn" disabled={loading}>
                 {loading ? <Loader2 className="spinner" size={20} /> : 'Lưu thay đổi'}
               </button>
             </form>
@@ -291,18 +286,17 @@ const Profile = () => {
         const expireDate = user?.vip_expire_at ? new Date(user.vip_expire_at).toLocaleDateString('vi-VN') : null;
 
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <h2 style={styles.tabTitle}>Gói thành viên VIP</h2>
-            <div style={{
-              ...styles.vipHero, 
+          <div className="animate-fade-in">
+            <h2 className="prof-tab-title">Gói thành viên VIP</h2>
+            <div className="prof-vip-hero" style={{
               background: isVIP ? 'linear-gradient(135deg, #F0FFF4 0%, #E2FBE9 100%)' : '#f8fafc',
               borderColor: isVIP ? '#00B04B' : 'var(--border)'
             }}>
-              <div style={styles.vipInfo}>
+              <div className="prof-vip-info">
                 <Crown size={40} color={isVIP ? "#00B04B" : "#94a3b8"} />
                 <div>
-                  <h3 style={styles.vipTier}>{isVIP ? 'Thành viên VIP' : 'Gói Standard'}</h3>
-                  <p style={styles.vipStatus}>
+                  <h3 className="prof-vip-tier">{isVIP ? 'Thành viên VIP' : 'Gói Standard'}</h3>
+                  <p className="prof-vip-status">
                     {isVIP 
                       ? `Hạn sử dụng đến: ${expireDate}` 
                       : 'Bạn đang sử dụng tài khoản miễn phí'}
@@ -311,7 +305,7 @@ const Profile = () => {
               </div>
               {!isVIP && (
                 <button 
-                  style={styles.vipActionBtn} 
+                  className="prof-vip-action-btn" 
                   onClick={handleUpgradeVIP}
                   disabled={loading}
                 >
@@ -320,17 +314,17 @@ const Profile = () => {
               )}
             </div>
 
-            <h4 style={styles.subTitle}>Đặc quyền VIP</h4>
-            <div style={styles.benefitsGrid}>
-              <div style={styles.benefitCard}>
+            <h4 className="prof-sub-title">Đặc quyền VIP</h4>
+            <div className="prof-benefits-grid">
+              <div className="prof-benefit-card">
                 <CheckCircle2 size={24} color="#10b981" />
                 <p>Giảm giá 10% cho mọi đơn hàng</p>
               </div>
-              <div style={styles.benefitCard}>
+              <div className="prof-benefit-card">
                 <CheckCircle2 size={24} color="#10b981" />
                 <p>Miễn phí vận chuyển toàn quốc</p>
               </div>
-              <div style={styles.benefitCard}>
+              <div className="prof-benefit-card">
                 <CheckCircle2 size={24} color="#10b981" />
                 <p>Xử lý đơn hàng ưu tiên</p>
               </div>
@@ -340,28 +334,28 @@ const Profile = () => {
 
       case 'address':
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <div style={styles.tabHeader}>
-              <h2 style={styles.tabTitle}>Sổ địa chỉ</h2>
-              <button style={styles.addBtn}><Plus size={18} /> Thêm mới</button>
+          <div className="animate-fade-in">
+            <div className="prof-tab-header">
+              <h2 className="prof-tab-title" style={{marginBottom: 0}}>Sổ địa chỉ</h2>
+              <button className="prof-add-btn"><Plus size={18} /> Thêm mới</button>
             </div>
-            <div style={styles.addressList}>
+            <div className="prof-address-list">
               {addresses.length === 0 ? (
-                <p style={styles.emptyMsg}>Bạn chưa có địa chỉ nào</p>
+                <p className="prof-empty-msg">Bạn chưa có địa chỉ nào</p>
               ) : (
                 addresses.map(addr => (
-                  <div key={addr.id} style={styles.addressCard}>
-                    <div style={styles.addressInfo}>
-                      <div style={styles.addressNameRow}>
-                        <span style={styles.addrName}>{addr.full_name}</span>
-                        {addr.is_default && <span style={styles.defaultBadge}>Mặc định</span>}
+                  <div key={addr.id} className="prof-address-card">
+                    <div className="prof-address-info">
+                      <div className="prof-address-name-row">
+                        <span className="prof-addr-name">{addr.full_name}</span>
+                        {addr.is_default && <span className="prof-default-badge">Mặc định</span>}
                       </div>
-                      <p style={styles.addrText}>{addr.address}</p>
-                      <p style={styles.addrPhone}>{addr.phone}</p>
+                      <p className="prof-addr-text">{addr.address}</p>
+                      <p className="prof-addr-phone">{addr.phone}</p>
                     </div>
-                    <div style={styles.addressActions}>
-                      <button style={styles.iconBtn}><Edit2 size={16} /></button>
-                      <button style={{...styles.iconBtn, color: 'var(--danger)'}}><Trash2 size={16} /></button>
+                    <div className="prof-address-actions">
+                      <button className="prof-icon-btn"><Edit2 size={16} /></button>
+                      <button className="prof-icon-btn" style={{color: 'var(--danger)'}}><Trash2 size={16} /></button>
                     </div>
                   </div>
                 ))
@@ -372,25 +366,25 @@ const Profile = () => {
 
       case 'orders':
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <h2 style={styles.tabTitle}>Lịch sử đơn hàng</h2>
-            <div style={styles.orderList}>
+          <div className="animate-fade-in">
+            <h2 className="prof-tab-title">Lịch sử đơn hàng</h2>
+            <div className="prof-order-list">
               {orders.length === 0 ? (
-                <p style={styles.emptyMsg}>Bạn chưa có đơn hàng nào</p>
+                <p className="prof-empty-msg">Bạn chưa có đơn hàng nào</p>
               ) : (
                 orders.map(order => (
-                  <div key={order.id} style={styles.orderCard}>
-                    <div style={styles.orderHeader}>
-                      <span style={styles.orderId}>Đơn hàng #{order.id.toString().slice(-6)}</span>
-                      <span style={{...styles.orderStatus, ...getStatusStyle(order.status)}}>
+                  <div key={order.id} className="prof-order-card">
+                    <div className="prof-order-header">
+                      <span className="prof-order-id">Đơn hàng #{order.id.toString().slice(-6)}</span>
+                      <span className="prof-order-status" style={getStatusStyle(order.status)}>
                         {translateStatus(order.status)}
                       </span>
                     </div>
-                    <div style={styles.orderBody}>
+                    <div className="prof-order-body">
                       <p>Ngày đặt: {new Date(order.created_at).toLocaleDateString('vi-VN')}</p>
-                      <p style={styles.orderTotal}>Tổng tiền: {order.total_price?.toLocaleString()}₫</p>
+                      <p className="prof-order-total">Tổng tiền: {order.total_price?.toLocaleString()}₫</p>
                     </div>
-                    <button style={styles.orderLink}>Chi tiết đơn hàng <ChevronRight size={16} /></button>
+                    <button className="prof-order-link">Chi tiết đơn hàng <ChevronRight size={16} /></button>
                   </div>
                 ))
               )}
@@ -400,19 +394,19 @@ const Profile = () => {
 
       case 'wishlist':
         return (
-          <div className="animate-fade-in" style={styles.tabPane}>
-            <h2 style={styles.tabTitle}>Danh sách yêu thích</h2>
-            <div style={styles.wishlistGrid}>
+          <div className="animate-fade-in">
+            <h2 className="prof-tab-title">Danh sách yêu thích</h2>
+            <div className="prof-wishlist-grid">
               {favorites.length === 0 ? (
-                <p style={styles.emptyMsg}>Chưa có sản phẩm yêu thích</p>
+                <p className="prof-empty-msg">Chưa có sản phẩm yêu thích</p>
               ) : (
                 favorites.map(fav => (
                   <Link to={`/product/${fav.id}`} key={fav.id} style={{textDecoration: 'none'}}>
-                    <div style={styles.wishCard}>
-                       <img src={fav.image} alt={fav.name} style={styles.wishImg} />
-                       <div style={styles.wishContent}>
-                          <h4 style={{...styles.wishName, color: 'var(--text-main)'}}>{fav.name}</h4>
-                          <p style={styles.wishPrice}>{fav.price?.toLocaleString()}₫</p>
+                    <div className="prof-wish-card">
+                       <img src={fav.image} alt={fav.name} className="prof-wish-img" />
+                       <div className="prof-wish-content">
+                          <h4 className="prof-wish-name" style={{color: 'var(--text-main)'}}>{fav.name}</h4>
+                          <p className="prof-wish-price">{fav.price?.toLocaleString()}₫</p>
                        </div>
                     </div>
                   </Link>
@@ -428,71 +422,71 @@ const Profile = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.layout}>
+    <div className="prof-container">
+      <div className="prof-layout">
         {/* Sidebar */}
-        <aside style={styles.sidebar}>
-          <div style={styles.userCard}>
-             <div style={styles.sidebarAvatar}>
+        <aside className="prof-sidebar">
+          <div className="prof-user-card">
+             <div className="prof-sidebar-avatar">
                 {profileData.avatar ? (
-                  <img src={profileData.avatar} alt="Avatar" style={styles.avatarImg} />
+                  <img src={profileData.avatar} alt="Avatar" className="prof-avatar-img" />
                 ) : (
                   profileData.name?.charAt(0)
                 )}
              </div>
-             <h3 style={styles.userName}>{profileData.name}</h3>
-             <p style={styles.userEmail}>{profileData.email}</p>
+             <h3 className="prof-user-name">{profileData.name}</h3>
+             <p className="prof-user-email">{profileData.email}</p>
           </div>
           
-          <nav style={styles.nav}>
+          <nav className="prof-nav">
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'profile' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'profile' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('profile')}
             >
               <User size={18} /> Hồ sơ cá nhân
             </button>
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'vip' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'vip' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('vip')}
             >
               <Crown size={18} /> Thành viên VIP
             </button>
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'address' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'address' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('address')}
             >
               <MapPin size={18} /> Sổ địa chỉ
             </button>
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'orders' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'orders' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('orders')}
             >
               <Package size={18} /> Đơn hàng của tôi
             </button>
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'wishlist' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'wishlist' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('wishlist')}
             >
               <Heart size={18} /> Danh sách yêu thích
             </button>
             <button 
-              style={{...styles.navBtn, ...(activeTab === 'security' ? styles.navBtnActive : {})}}
+              className={`prof-nav-btn ${activeTab === 'security' ? 'prof-nav-btn-active' : ''}`}
               onClick={() => setActiveTab('security')}
             >
               <Lock size={18} /> Bảo mật
             </button>
             
-            <hr style={styles.hr} />
+            <hr className="prof-hr" />
             
-            <button style={{...styles.navBtn, color: 'var(--danger)'}} onClick={logout}>
+            <button className="prof-nav-btn" style={{color: 'var(--danger)'}} onClick={logout}>
               <LogOut size={18} /> Đăng xuất
             </button>
           </nav>
         </aside>
 
         {/* Content */}
-        <div style={styles.mainContent}>
-          <div className="glass" style={styles.contentWrapper}>
+        <div className="prof-main-content">
+          <div className="glass prof-content-wrapper">
             {renderTabContent()}
           </div>
         </div>
@@ -524,304 +518,6 @@ const translateStatus = (status) => {
     cancelled: 'Đã hủy'
   };
   return map[status] || status;
-};
-
-const styles = {
-  container: {
-    maxWidth: '1200px',
-    margin: '40px auto',
-    padding: '0 20px',
-  },
-  layout: {
-    display: 'flex',
-    gap: '30px',
-    alignItems: 'flex-start',
-  },
-  sidebar: {
-    width: '300px',
-    flexShrink: 0,
-  },
-  userCard: {
-    backgroundColor: '#fff',
-    borderRadius: '24px',
-    padding: '30px 20px',
-    textAlign: 'center',
-    marginBottom: '20px',
-    boxShadow: 'var(--shadow-sm)',
-    border: '1px solid var(--border)',
-  },
-  sidebarAvatar: {
-    width: '80px',
-    height: '80px',
-    borderRadius: '50%',
-    backgroundColor: 'var(--primary)',
-    margin: '0 auto 15px',
-    color: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '32px',
-    fontWeight: 'bold',
-    overflow: 'hidden',
-  },
-  userName: { fontSize: '18px', fontWeight: '700', marginBottom: '4px' },
-  userEmail: { fontSize: '14px', color: 'var(--text-muted)' },
-  nav: {
-    backgroundColor: '#fff',
-    borderRadius: '24px',
-    padding: '10px',
-    boxShadow: 'var(--shadow-sm)',
-    border: '1px solid var(--border)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-  },
-  navBtn: {
-    width: '100%',
-    padding: '12px 16px',
-    borderRadius: '15px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    backgroundColor: 'transparent',
-    color: 'var(--text-main)',
-    fontWeight: '500',
-    fontSize: '15px',
-    textAlign: 'left',
-    transition: 'all 0.2s',
-  },
-  navBtnActive: {
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-  },
-  hr: {
-    margin: '10px 15px',
-    border: 'none',
-    borderTop: '1px solid var(--border)',
-  },
-  mainContent: {
-    flex: 1,
-  },
-  contentWrapper: {
-    borderRadius: '24px',
-    padding: '40px',
-    minHeight: '600px',
-    boxShadow: 'var(--shadow)',
-  },
-  tabTitle: {
-    fontSize: '24px',
-    fontWeight: '700',
-    marginBottom: '30px',
-  },
-  tabHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '30px',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
-    maxWidth: '500px',
-  },
-  avatarSection: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '20px',
-    marginBottom: '10px',
-  },
-  avatarWrapper: {
-    position: 'relative',
-    width: '100px',
-    height: '100px',
-  },
-  avatarImg: {
-    width: '100%',
-    height: '100%',
-    borderRadius: '50%',
-    objectFit: 'cover',
-  },
-  avatarPlaceholder: {
-    width: '100%',
-    height: '100%',
-    borderRadius: '50%',
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '40px',
-    fontWeight: 'bold',
-  },
-  uploadBtn: {
-    position: 'absolute',
-    bottom: '0',
-    right: '0',
-    backgroundColor: '#fff',
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxShadow: 'var(--shadow)',
-    cursor: 'pointer',
-    border: '1px solid var(--border)',
-  },
-  avatarInfo: {
-    flex: 1,
-  },
-  avatarHint: { fontSize: '13px', color: 'var(--text-muted)' },
-  inputGroup: { display: 'flex', flexDirection: 'column', gap: '8px' },
-  label: { fontSize: '14px', fontWeight: '600', color: 'var(--text-muted)' },
-  input: {
-    padding: '12px 16px',
-    borderRadius: '15px',
-    border: '1px solid var(--border)',
-    fontSize: '15px',
-    outline: 'none',
-    transition: 'border-color 0.2s',
-  },
-  submitBtn: {
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    padding: '14px',
-    borderRadius: '15px',
-    fontSize: '16px',
-    fontWeight: '600',
-    marginTop: '10px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    boxShadow: 'var(--shadow-primary)',
-  },
-  vipHero: {
-    backgroundColor: '#f8fafc',
-    borderRadius: '20px',
-    padding: '30px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '40px',
-    border: '1px solid var(--border)',
-  },
-  vipInfo: { display: 'flex', alignItems: 'center', gap: '20px' },
-  vipTier: { fontSize: '20px', fontWeight: '700', marginBottom: '4px' },
-  vipStatus: { fontSize: '14px', color: 'var(--text-muted)' },
-  vipActionBtn: {
-    backgroundColor: 'var(--primary)',
-    color: '#fff',
-    padding: '10px 24px',
-    borderRadius: '25px',
-    fontWeight: '600',
-    fontSize: '14px',
-  },
-  subTitle: { fontSize: '16px', fontWeight: '700', marginBottom: '20px' },
-  benefitsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '20px',
-  },
-  benefitCard: {
-    padding: '20px',
-    borderRadius: '20px',
-    backgroundColor: '#fff',
-    border: '1px solid var(--border)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    gap: '12px',
-  },
-  addBtn: {
-    backgroundColor: '#f1f5f9',
-    padding: '8px 16px',
-    borderRadius: '25px',
-    fontSize: '14px',
-    fontWeight: '600',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-  },
-  addressList: { display: 'flex', flexDirection: 'column', gap: '15px' },
-  addressCard: {
-    padding: '20px',
-    borderRadius: '20px',
-    border: '1px solid var(--border)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-  addressNameRow: { display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' },
-  addrName: { fontWeight: '700', fontSize: '16px' },
-  defaultBadge: {
-    backgroundColor: '#dcfce7',
-    color: '#166534',
-    padding: '2px 8px',
-    borderRadius: '10px',
-    fontSize: '11px',
-    fontWeight: '700',
-  },
-  addrText: { fontSize: '14px', color: 'var(--text-main)', marginBottom: '4px' },
-  addrPhone: { fontSize: '14px', color: 'var(--text-muted)' },
-  addressActions: { display: 'flex', gap: '10px' },
-  iconBtn: {
-    padding: '8px',
-    borderRadius: '10px',
-    backgroundColor: '#f8fafc',
-    color: 'var(--text-muted)',
-    transition: 'all 0.2s',
-  },
-  emptyMsg: { color: 'var(--text-muted)', textAlign: 'center', padding: '40px' },
-  orderList: { display: 'flex', flexDirection: 'column', gap: '15px' },
-  orderCard: {
-    padding: '20px',
-    borderRadius: '20px',
-    border: '1px solid var(--border)',
-    backgroundColor: '#fff',
-  },
-  orderHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '15px',
-  },
-  orderId: { fontWeight: '700', fontSize: '15px' },
-  orderStatus: {
-    padding: '4px 12px',
-    borderRadius: '20px',
-    fontSize: '12px',
-    fontWeight: '700',
-  },
-  orderBody: { marginBottom: '15px', fontSize: '14px', color: 'var(--text-muted)' },
-  orderTotal: { marginTop: '4px', fontWeight: '700', color: 'var(--text-main)', fontSize: '16px' },
-  orderLink: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '12px',
-    backgroundColor: '#f8fafc',
-    fontSize: '13px',
-    fontWeight: '600',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '4px',
-  },
-  wishlistGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-    gap: '20px',
-  },
-  wishCard: {
-    backgroundColor: '#fff',
-    borderRadius: '15px',
-    overflow: 'hidden',
-    border: '1px solid var(--border)',
-  },
-  wishImg: { width: '100%', height: '180px', objectFit: 'cover' },
-  wishContent: { padding: '12px' },
-  wishName: { fontSize: '14px', fontWeight: '600', marginBottom: '4px' },
-  wishPrice: { fontSize: '15px', fontWeight: '700', color: 'var(--primary)' }
 };
 
 export default Profile;
