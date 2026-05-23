@@ -175,7 +175,12 @@ const ProductDetail = () => {
       if (colorVariant) {
         displayImage = colorVariant.image;
       }
-    } else if (se  return (
+    } else if (selectedVariant?.image) {
+      displayImage = selectedVariant.image;
+    }
+  }
+
+  return (
     <div className="pd-container">
       <button onClick={() => navigate(-1)} className="pd-back-link">
         <ChevronLeft size={20} /> Quay lại

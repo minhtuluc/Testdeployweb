@@ -166,7 +166,14 @@ const Profile = () => {
       setUser(updatedUser);
       
       success('Chúc mừng! Bạn đã trở thành thành viên VIP.');
-    } catc  const renderTabContent = () => {
+    } catch (err) {
+      showError('Nâng cấp thất bại. Vui lòng thử lại sau.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const renderTabContent = () => {
     switch (activeTab) {
       case 'security':
         return (
