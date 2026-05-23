@@ -157,9 +157,6 @@
   border-radius: 18px;
   flex-wrap: wrap;
   gap: 16px;
-  position: sticky;
-  top: 75px;
-  z-index: 99;
   background: rgba(245, 245, 247, 0.72);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -518,7 +515,6 @@
     align-items: stretch;
     border-radius: 14px;
     padding: 10px;
-    top: 60px;
     /* Prevent overflow */
     overflow: hidden;
     width: 100%;
