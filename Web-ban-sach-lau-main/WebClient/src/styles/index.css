@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #00B04B;          /* Màu xanh chủ đạo */
+  --primary: #00B04B;
+  /* Màu xanh chủ đạo */
   --primary-light: #2ecc71;
   --primary-dark: #00873d;
   --secondary: #2196F3;
@@ -60,13 +61,16 @@ input {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
@@ -88,8 +92,15 @@ input {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {

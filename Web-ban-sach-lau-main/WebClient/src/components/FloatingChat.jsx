@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Sparkles, AlertCircle, ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import client from '../api/client';
@@ -12,6 +12,7 @@ const FloatingChat = () => {
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const messagesEndRef = useRef(null);
   const pollingInterval = useRef(null);
@@ -19,6 +20,18 @@ const FloatingChat = () => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // 1. Tải lịch sử chat từ server
   const fetchMessages = async (showLoading = false) => {
@@ -200,6 +213,22 @@ const FloatingChat = () => {
             )}
           </motion.div>
         )}
+        {showScrollTop && !isOpen && (
+          <motion.button
+            key="back-to-top"
+            initial={{ opacity: 0, scale: 0.5, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 15 }}
+            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            style={styles.backToTopBtn}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            title="Cuộn về đầu trang"
+          >
+            <ArrowUp size={22} />
+          </motion.button>
+        )}
       </AnimatePresence>
 
       {/* Floating Action Button Trigger */}
@@ -248,6 +277,23 @@ const styles = {
   floatingBtn: {
     position: 'fixed',
     bottom: '30px',
+    right: '30px',
+    width: '56px',
+    height: '56px',
+    borderRadius: '50%',
+    backgroundColor: 'var(--primary)',
+    color: '#0f172a',
+    border: 'none',
+    boxShadow: '0 8px 30px rgba(0, 216, 255, 0.3)',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 999,
+  },
+  backToTopBtn: {
+    position: 'fixed',
+    bottom: '96px',
     right: '30px',
     width: '56px',
     height: '56px',

@@ -1,0 +1,540 @@
+/* StoreHome.css - iOS-Style Premium UI for BookHaven Homepage */
+
+.store-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: left;
+}
+
+/* 1. iOS-Style Signature Green Hero Section */
+.hero-section {
+  position: relative;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: 20px;
+  display: flex;
+  overflow: hidden;
+  height: 380px;
+  margin-bottom: 40px;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 176, 75, 0.12);
+  border: none;
+}
+
+/* Subtle decorative ambient lighting in background */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-content {
+  flex: 1.2;
+  padding: 40px 40px 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: -1.5px;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.hero-tag {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #ffffff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.hero-tag:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.hero-image-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding-right: 35px;
+  height: 100%;
+}
+
+.hero-image {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+}
+
+.hero-image.active {
+  opacity: 1;
+  pointer-events: auto;
+  animation: floatBook 6s ease-in-out infinite;
+}
+
+/* Floating animation for the hero image */
+@keyframes floatBook {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(0.8deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* 2. Store Section and Title */
+.store-section {
+  margin-top: 40px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+  color: #1d1d1f;
+}
+
+/* 3. iOS-Style Frosted Glass Filter Bar */
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 10px 16px;
+  border-radius: 18px;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: sticky;
+  top: 75px;
+  z-index: 99;
+  background: rgba(245, 245, 247, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.015);
+  transition: all 0.3s ease;
+}
+
+.categories-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.category-btn {
+  padding: 8px 14px;
+  border-radius: 30px;
+  background-color: #e8e8ed;
+  color: #515154;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+}
+
+.category-btn:hover {
+  background-color: #dddde2;
+  color: #1d1d1f;
+  transform: translateY(-0.5px);
+}
+
+.category-btn-active {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(0, 176, 75, 0.18);
+}
+
+/* Search Box iOS style */
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: #86868b;
+  transition: color 0.2s;
+}
+
+.search-input {
+  padding: 8px 14px 8px 38px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  outline: none;
+  width: 230px;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: #1d1d1f;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 176, 75, 0.08);
+  width: 270px;
+}
+
+.search-box:focus-within .search-icon {
+  color: var(--primary);
+}
+
+/* 4. Products Grid and Card iOS Styling (Borderless Cards) */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: none;
+  /* Borderless to follow iOS layout */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.025), 0 1px 2px rgba(0, 0, 0, 0.01);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+/* Image Container */
+.product-image-box {
+  height: 250px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.product-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.04) rotate(0.5deg);
+}
+
+/* Favorite heart button */
+.fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.fav-btn:hover {
+  transform: scale(1.08);
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.12);
+}
+
+/* Product Info Container */
+.card-details {
+  padding: 16px;
+  background-color: #ffffff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name-link {
+  text-decoration: none;
+}
+
+.product-card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1d1d1f;
+  margin-bottom: 6px;
+  line-height: 1.4;
+  height: 40px;
+  display: -webkit-box;
+  WebkitLineClamp: 2;
+  WebkitBoxOrient: 'vertical';
+  overflow: hidden;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  text-align: left;
+}
+
+.product-card:hover .product-card-name {
+  color: var(--primary);
+}
+
+.product-card-author {
+  font-size: 11px;
+  color: #86868b;
+  margin-bottom: 12px;
+  margin-top: 0;
+  font-style: italic;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 16px;
+  line-height: 16px;
+  text-align: left;
+}
+
+.product-price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.product-price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+}
+
+.original-price {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+  transition: all 0.3s;
+}
+
+.original-price.vip-strike {
+  text-decoration: line-through;
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+.vip-badge-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vip-price-label {
+  color: #00B04B;
+  font-weight: 800;
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.vip-price-label.vip-active {
+  font-size: 16.5px;
+}
+
+/* Sleek Add-to-cart button */
+.add-to-cart-btn {
+  background-color: var(--primary);
+  color: #ffffff;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 176, 75, 0.12);
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--primary-dark);
+  transform: scale(1.06);
+  box-shadow: 0 4px 10px rgba(0, 176, 75, 0.25);
+}
+
+/* Skeleton Loading styles */
+.skeleton-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+}
+
+/* 5. See More Section */
+.see-more-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 36px;
+  margin-bottom: 36px;
+}
+
+.see-more-btn {
+  background-color: transparent;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 176, 75, 0.01);
+  outline: none;
+}
+
+.see-more-btn:hover {
+  background-color: var(--primary);
+  color: #ffffff;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(0, 176, 75, 0.15);
+}
+
+.see-more-btn:active {
+  transform: translateY(0);
+}
+
+/* 6. Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .hero-content {
+    padding: 10px 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: 14.5px;
+    margin-bottom: 20px;
+  }
+
+  .hero-tags {
+    justify-content: center;
+  }
+
+  .hero-image-container {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .hero-image {
+    width: 60%;
+    height: auto;
+    max-height: 200px;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 14px;
+    padding: 10px;
+    top: 60px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .search-input:focus {
+    width: 100%;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px;
+  }
+
+  .product-image-box {
+    height: 180px;
+  }
+}

@@ -48,9 +48,9 @@ const Navbar = () => {
         <div style={styles.actionsSection}>
           <div style={styles.searchBox}>
             <Search size={18} style={styles.searchIcon} />
-            <input 
-              type="text" 
-              placeholder="Tìm kiếm sách, tác giả, NXB..." 
+            <input
+              type="text"
+              placeholder="Tìm kiếm sách, tác giả, NXB..."
               style={styles.searchInput}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -58,7 +58,7 @@ const Navbar = () => {
             />
           </div>
 
-          <Link to="/cart" style={{...styles.iconBtn, position: 'relative'}}>
+          <Link to="/cart" style={{ ...styles.iconBtn, position: 'relative' }}>
             <ShoppingCart size={24} />
             {cartCount > 0 && (
               <span style={styles.cartBadge}>{cartCount}</span>
