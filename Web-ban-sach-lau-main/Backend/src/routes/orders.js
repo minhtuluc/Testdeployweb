@@ -224,6 +224,12 @@ router.put("/:id/status", authMiddleware(), async (req, res) => {
       .update({ status: "cancelled" })
       .eq("id", req.params.id);
 
+    // Cập nhật trạng thái ở bảng payments nếu có liên quan
+    await supabase
+      .from("payments")
+      .update({ status: "cancelled" })
+      .eq("order_id", req.params.id);
+
     res.json({ message: "Đơn hàng đã được hủy" });
   } catch (err) {
     res.status(500).json({ message: "Lỗi server" });

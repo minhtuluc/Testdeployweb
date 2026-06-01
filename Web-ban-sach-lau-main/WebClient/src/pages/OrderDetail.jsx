@@ -30,6 +30,7 @@ const OrderDetail = () => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
 
   const fetchOrderDetail = async () => {
     try {
@@ -85,6 +86,23 @@ const OrderDetail = () => {
     }
   };
 
+  const handleCancelOrder = async () => {
+    if (!window.confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
+      return;
+    }
+
+    try {
+      setCancelling(true);
+      await client.put(`/orders/${id}/status`, { status: 'cancelled' });
+      success('Hủy đơn hàng thành công!');
+      fetchOrderDetail();
+    } catch (err) {
+      showError(err.response?.data?.message || 'Không thể hủy đơn hàng');
+    } finally {
+      setCancelling(false);
+    }
+  };
+
   if (loading) {
     return (
       <div style={styles.centerContainer}>
@@ -101,8 +119,10 @@ const OrderDetail = () => {
   const getStatusInfo = (status) => {
     switch (status) {
       case 'pending': return { text: 'Chờ xử lý', color: '#f59e0b', icon: <Clock size={18} /> };
+      case 'paid': return { text: 'Đã thanh toán', color: '#10b981', icon: <CreditCard size={18} /> };
       case 'shipped': return { text: 'Đang giao', color: '#3b82f6', icon: <Package size={18} /> };
       case 'completed': return { text: 'Đã hoàn thành', color: '#10b981', icon: <CheckCircle2 size={18} /> };
+      case 'cancelled': return { text: 'Đã hủy', color: '#ef4444', icon: <X size={18} /> };
       default: return { text: status, color: '#ef4444', icon: <X size={18} /> };
     }
   };
@@ -206,6 +226,19 @@ const OrderDetail = () => {
                </div>
                <p style={styles.infoDetail}>Thanh toán khi nhận hàng (COD)</p>
             </div>
+
+            {['pending', 'paid'].includes(order.status) && (
+              <>
+                <div style={{...styles.divider, margin: '20px 0'}}></div>
+                <button
+                  className="cancel-btn"
+                  onClick={handleCancelOrder}
+                  disabled={cancelling}
+                >
+                  {cancelling ? 'Đang hủy...' : 'Hủy đơn hàng'}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -260,6 +293,32 @@ const OrderDetail = () => {
       <style>{`
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .cancel-btn {
+          width: 100%;
+          background-color: transparent;
+          color: #ef4444;
+          border: 1px solid #ef4444;
+          padding: 12px;
+          border-radius: 20px;
+          font-size: 15px;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          transition: all 0.2s;
+          margin-top: 10px;
+        }
+        .cancel-btn:hover {
+          background-color: #ef4444;
+          color: #fff;
+        }
+        .cancel-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
       `}</style>
     </div>
   );
