@@ -212,9 +212,9 @@ const OrderDetail = () => {
                   <MapPin size={18} color="var(--primary)" /> 
                   <span>Thông tin nhận hàng</span>
                </div>
-               <p style={styles.infoName}>Minh Tú (Demo)</p>
-               <p style={styles.infoDetail}>Số 1 Đại Cồ Việt, Hai Bà Trưng, Hà Nội</p>
-               <p style={styles.infoDetail}>090 123 4567</p>
+               <p style={styles.infoName}>{order.addresses?.full_name || 'N/A'}</p>
+               <p style={styles.infoDetail}>{order.addresses?.address || 'N/A'}</p>
+               <p style={styles.infoDetail}>{order.addresses?.phone || 'N/A'}</p>
             </div>
 
             <div style={{...styles.divider, margin: '20px 0'}}></div>
@@ -224,7 +224,9 @@ const OrderDetail = () => {
                   <CreditCard size={18} color="var(--primary)" /> 
                   <span>Phương thức thanh toán</span>
                </div>
-               <p style={styles.infoDetail}>Thanh toán khi nhận hàng (COD)</p>
+               <p style={styles.infoDetail}>
+                 {order.payment_method?.toUpperCase() === 'COD' ? 'Thanh toán khi nhận hàng (COD)' : (order.payment_method || 'Thanh toán khi nhận hàng (COD)')}
+               </p>
             </div>
 
             {['pending', 'paid'].includes(order.status) && (

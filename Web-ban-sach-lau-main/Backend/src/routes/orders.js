@@ -41,7 +41,14 @@ router.get("/:id", authMiddleware(), async (req, res) => {
 
   const { data: order } = await supabase
     .from("orders")
-    .select("*")
+    .select(`
+      *,
+      addresses (
+        full_name,
+        phone,
+        address
+      )
+    `)
     .eq("id", orderId)
     .eq("user_id", userId)
     .single();
