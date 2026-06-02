@@ -42,6 +42,76 @@ const Profile = () => {
   const [orders, setOrders] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
+  const [addressForm, setAddressForm] = useState({
+    fullName: '',
+    phone: '',
+    address: '',
+    isDefault: false
+  });
+  const [addressSubmitting, setAddressSubmitting] = useState(false);
+
+  const handleOpenAddAddress = () => {
+    setAddressForm({
+      fullName: '',
+      phone: '',
+      address: '',
+      isDefault: false
+    });
+    setEditingAddress(null);
+    setShowAddressModal(true);
+  };
+
+  const handleOpenEditAddress = (addr) => {
+    setAddressForm({
+      fullName: addr.full_name || '',
+      phone: addr.phone || '',
+      address: addr.address || '',
+      isDefault: !!addr.is_default
+    });
+    setEditingAddress(addr);
+    setShowAddressModal(true);
+  };
+
+  const handleDeleteAddress = async (addrId) => {
+    if (!window.confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')) return;
+    try {
+      await client.delete(`/addresses/${addrId}`);
+      success('Xóa địa chỉ thành công!');
+      fetchAddresses();
+    } catch (err) {
+      showError(err.response?.data?.message || 'Xóa địa chỉ thất bại. Vui lòng thử lại.');
+    }
+  };
+
+  const handleAddressSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setAddressSubmitting(true);
+      const payload = {
+        full_name: addressForm.fullName,
+        phone: addressForm.phone,
+        address: addressForm.address,
+        is_default: addressForm.isDefault
+      };
+
+      if (editingAddress) {
+        await client.put(`/addresses/${editingAddress.id}`, payload);
+        success('Cập nhật địa chỉ thành công!');
+      } else {
+        await client.post('/addresses', payload);
+        success('Thêm địa chỉ thành công!');
+      }
+      setShowAddressModal(false);
+      fetchAddresses();
+    } catch (err) {
+      showError(err.response?.data?.message || 'Thao tác thất bại. Vui lòng thử lại.');
+    } finally {
+      setAddressSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       setProfileData({
@@ -344,7 +414,7 @@ const Profile = () => {
           <div className="animate-fade-in">
             <div className="prof-tab-header">
               <h2 className="prof-tab-title" style={{marginBottom: 0}}>Sổ địa chỉ</h2>
-              <button className="prof-add-btn"><Plus size={18} /> Thêm mới</button>
+              <button className="prof-add-btn" onClick={handleOpenAddAddress}><Plus size={18} /> Thêm mới</button>
             </div>
             <div className="prof-address-list">
               {addresses.length === 0 ? (
@@ -361,8 +431,8 @@ const Profile = () => {
                       <p className="prof-addr-phone">{addr.phone}</p>
                     </div>
                     <div className="prof-address-actions">
-                      <button className="prof-icon-btn"><Edit2 size={16} /></button>
-                      <button className="prof-icon-btn" style={{color: 'var(--danger)'}}><Trash2 size={16} /></button>
+                      <button className="prof-icon-btn" onClick={() => handleOpenEditAddress(addr)}><Edit2 size={16} /></button>
+                      <button className="prof-icon-btn" style={{color: 'var(--danger)'}} onClick={() => handleDeleteAddress(addr.id)}><Trash2 size={16} /></button>
                     </div>
                   </div>
                 ))
@@ -391,7 +461,9 @@ const Profile = () => {
                       <p>Ngày đặt: {new Date(order.created_at).toLocaleDateString('vi-VN')}</p>
                       <p className="prof-order-total">Tổng tiền: {order.total_price?.toLocaleString()}₫</p>
                     </div>
-                    <button className="prof-order-link">Chi tiết đơn hàng <ChevronRight size={16} /></button>
+                    <Link to={`/orders/${order.id}`} className="prof-order-link" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      Chi tiết đơn hàng <ChevronRight size={16} />
+                    </Link>
                   </div>
                 ))
               )}
@@ -498,6 +570,76 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {showAddressModal && (
+        <div className="prof-modal-overlay">
+          <div className="prof-modal-card">
+            <h3 className="prof-modal-title">{editingAddress ? 'Sửa địa chỉ' : 'Thêm địa chỉ mới'}</h3>
+            <form onSubmit={handleAddressSubmit} className="prof-modal-form">
+              <div className="prof-input-group">
+                <label className="prof-label">Họ và tên người nhận</label>
+                <input 
+                  type="text"
+                  className="prof-input"
+                  placeholder="Nhập họ và tên"
+                  value={addressForm.fullName}
+                  onChange={(e) => setAddressForm({ ...addressForm, fullName: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="prof-input-group">
+                <label className="prof-label">Số điện thoại</label>
+                <input 
+                  type="tel"
+                  className="prof-input"
+                  placeholder="Nhập số điện thoại"
+                  value={addressForm.phone}
+                  onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="prof-input-group">
+                <label className="prof-label">Địa chỉ chi tiết</label>
+                <textarea 
+                  className="prof-input"
+                  style={{ minHeight: '80px', resize: 'vertical' }}
+                  placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                  value={addressForm.address}
+                  onChange={(e) => setAddressForm({ ...addressForm, address: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="prof-checkbox-group">
+                <label className="prof-checkbox-label">
+                  <input 
+                    type="checkbox"
+                    checked={addressForm.isDefault}
+                    onChange={(e) => setAddressForm({ ...addressForm, isDefault: e.target.checked })}
+                  />
+                  Đặt làm địa chỉ mặc định
+                </label>
+              </div>
+              <div className="prof-modal-actions">
+                <button 
+                  type="button" 
+                  className="prof-cancel-btn" 
+                  onClick={() => setShowAddressModal(false)}
+                  disabled={addressSubmitting}
+                >
+                  Hủy
+                </button>
+                <button 
+                  type="submit" 
+                  className="prof-save-btn"
+                  disabled={addressSubmitting}
+                >
+                  {addressSubmitting ? <Loader2 className="spinner" size={16} /> : 'Lưu'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       
       <style>{`
         .spinner { animation: spin 1s linear infinite; }

@@ -48,8 +48,8 @@ const OrderHistory = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.pageTitle}>Lịch sử Đơn hàng</h1>
-      
+      <h1 style={styles.pageTitle}>Lịch sử đơn hàng</h1>
+
       {orders.length === 0 ? (
         <div style={styles.emptyState}>
           <ShoppingBag size={64} color="#d1d5db" />
@@ -67,12 +67,12 @@ const OrderHistory = () => {
                     <Package size={20} color="var(--primary)" />
                     <span style={styles.orderId}>Đơn hàng #{order.id}</span>
                   </div>
-                  <div style={{...styles.statusBadge, backgroundColor: status.color + '15', color: status.color}}>
+                  <div style={{ ...styles.statusBadge, backgroundColor: status.color + '15', color: status.color }}>
                     {status.icon}
                     <span>{status.text}</span>
                   </div>
                 </div>
-                
+
                 <div style={styles.orderBody}>
                   <div style={styles.orderInfo}>
                     <p style={styles.orderDate}>Ngày đặt: {new Date(order.created_at).toLocaleDateString('vi-VN')}</p>
@@ -83,9 +83,9 @@ const OrderHistory = () => {
                     <span style={styles.totalValue}>{order.total_price?.toLocaleString()}₫</span>
                   </div>
                 </div>
-                
+
                 <div style={styles.orderFooter}>
-                  <button 
+                  <button
                     style={styles.detailsBtn}
                     onClick={() => navigate(`/orders/${order.id}`)}
                   >
