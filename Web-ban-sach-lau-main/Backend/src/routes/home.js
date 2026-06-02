@@ -26,10 +26,8 @@ router.get("/", async (req, res) => {
       .select("id, name, price, vip_price, image, category_id, author, publisher, language")
       .order("created_at", { ascending: false });
 
-    const { data: featured } = await supabase
-      .from("products")
-      .select("id, name, price, vip_price, image, category_id, author, publisher, language")
-      .order("created_at", { ascending: false });
+    // Tái sử dụng kết quả truy vấn products để tránh query database trùng lặp
+    const featured = products;
 
     res.json({
       categories,

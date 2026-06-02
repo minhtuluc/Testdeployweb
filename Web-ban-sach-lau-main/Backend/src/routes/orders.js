@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const supabase = require("../config/supabase");
 const authMiddleware = require("../middlewares/auth");
-const { PLATFORM_FEE_PERCENT } = require("../config/constants");
 
 // GET /orders - Danh sách đơn hàng của customer
 router.get("/", authMiddleware(), async (req, res) => {
@@ -150,9 +149,9 @@ router.post("/:id/complete", authMiddleware(), async (req, res) => {
       return res.status(400).json({ message: "Đơn hàng có sản phẩm từ nhiều shop - chưa hỗ trợ" });
     }
 
-    // Tính phí sàn và doanh thu shop
-    const platformFee = order.total_price * PLATFORM_FEE_PERCENT;
-    const shopRevenue = order.total_price * (1 - PLATFORM_FEE_PERCENT);
+    // Tính phí sàn và doanh thu shop (0% phí sàn cho single-vendor)
+    const platformFee = 0;
+    const shopRevenue = order.total_price;
 
     // Cộng tiền vào balance của shop
     const { error: balanceError } = await supabase.rpc("increment_shop_balance", {
